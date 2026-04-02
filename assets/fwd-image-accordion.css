@@ -1,0 +1,253 @@
+/* FWD Image Accordion Widget */
+
+.fwd-ia {
+    --ia-gap: 3rem;
+    --ia-border: rgba(255, 255, 255, 0.15);
+    --ia-transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
+}
+
+.fwd-ia__subtitle {
+    font-size: 1.125rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 2.5rem;
+    max-width: 520px;
+}
+
+.fwd-ia__layout {
+    display: flex;
+    gap: var(--ia-gap);
+    align-items: flex-start;
+}
+
+.fwd-ia__image-col {
+    flex: 0 0 45%;
+    max-width: 45%;
+    position: sticky;
+    top: 100px;
+}
+
+.fwd-ia__image {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--ia-transition);
+    pointer-events: none;
+}
+
+.fwd-ia__image--active {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+}
+
+.fwd-ia__image img {
+    width: 100%;
+    max-width: 24rem;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    animation: truebit-float 4s ease-in-out infinite;
+}
+
+.fwd-ia__image-mobile {
+    display: none;
+}
+
+.fwd-ia__accordion-col {
+    flex: 1;
+    min-width: 0;
+
+    @media (min-width: 992px) {
+        margin-top: -14rem;
+    }
+}
+
+.fwd-ia__item {
+    border-top: 1px solid var(--ia-border);
+}
+
+.fwd-ia__item:last-child {
+    border-bottom: 1px solid var(--ia-border);
+}
+
+.fwd-ia__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 2.5rem 3rem;
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    border-radius: 0;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    &:focus {
+        background: transparent;
+    }
+}
+
+.fwd-ia__number {
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    min-width: 1.75rem;
+}
+
+.fwd-ia .fwd-ia__title {
+    flex: 1;
+    font-size: 1.25rem !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    /* 1.6875rem */
+    letter-spacing: 0.01125rem;
+}
+
+.fwd-ia .fwd-ia__main-title {
+    flex: 1;
+    font-size: 2rem !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 115%;
+    /* 1.6875rem */
+    letter-spacing: -0.06rem;
+
+    @media (min-width: 992px) {
+        width: 100%;
+        max-width: 600px;
+    }
+}
+
+.fwd-ia__icon {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 1);
+    transition: color var(--ia-transition), transform var(--ia-transition);
+}
+
+.fwd-ia__item--active .fwd-ia__icon {
+    transform: rotate(45deg);
+}
+
+.fwd-ia__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+    padding: 0 3rem;
+}
+
+.fwd-ia__body-inner {
+    transition: padding 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.fwd-ia__item--active {
+    .fwd-ia__body {
+        grid-template-rows: 1fr;
+    }
+
+    .fwd-ia__body-inner {
+        padding: 0 0 2.5rem;
+    }
+}
+
+
+.fwd-ia__heading {
+    margin: 0 !important;
+    font-size: 2rem !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 115% !important;
+    letter-spacing: -0.04rem !important;
+}
+
+.fwd-ia__desc {
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 1.5rem */
+    letter-spacing: 0.01rem;
+    max-width: 540px;
+    opacity: .6;
+}
+
+@media (max-width: 1024px) {
+    .fwd-ia__layout {
+        flex-direction: column;
+    }
+
+    .fwd-ia__image-col {
+        display: none;
+    }
+
+    .fwd-ia__image-mobile {
+        display: block;
+        margin-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .fwd-ia__image-mobile img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 4px;
+    }
+
+    .fwd-ia__accordion-col {
+        width: 100%;
+    }
+
+    .fwd-ia__subtitle {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fwd-ia__heading {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .fwd-ia__header {
+        padding: 1.25rem;
+    }
+
+    .fwd-ia__subtitle {
+        padding: 0 1.25rem;
+    }
+
+    .fwd-ia__body {
+        padding: 0 1.25rem;
+    }
+
+    .fwd-ia__heading {
+        font-size: 1.25rem;
+    }
+
+    .fwd-ia__desc {
+        font-size: 0.9375rem;
+    }
+
+    .fwd-ia__title {
+        font-size: 1rem;
+    }
+}
+
+
