@@ -1,17 +1,25 @@
 ( function () {
     function initHeroVideos() {
         document.querySelectorAll( '.truebit-hero-video-wrapper' ).forEach( function ( wrapper ) {
-            var loopSrc = wrapper.dataset.loopSrc;
-            if ( ! loopSrc ) return;
+            var intro = wrapper.querySelector( '.truebit-hero-intro' );
+            var loop  = wrapper.querySelector( '.truebit-hero-loop' );
 
-            var video = wrapper.querySelector( '.truebit-hero-video' );
-            if ( ! video ) return;
+            if ( ! intro || ! loop ) return;
 
-            video.addEventListener( 'ended', function handler() {
-                video.removeEventListener( 'ended', handler );
-                video.src = loopSrc;
-                video.loop = true;
-                video.play();
+            var triggered = false;
+
+            intro.addEventListener( 'timeupdate', function () {
+                if ( triggered ) return;
+                if ( ! intro.duration ) return;
+
+                // Fire 20ms before the intro ends
+                if ( intro.currentTime >= intro.duration - 1.0 ) {
+                    triggered = true;
+                    loop.style.opacity      = '1';
+                    loop.style.pointerEvents = '';
+                    intro.style.opacity     = '0';
+                    loop.play();
+                }
             } );
         } );
     }
@@ -22,7 +30,6 @@
         initHeroVideos();
     }
 
-    // Re-init after Elementor frontend renders (editor preview)
     if ( window.elementorFrontend ) {
         window.elementorFrontend.hooks.addAction( 'frontend/element_ready/truebit_hero_video.default', initHeroVideos );
     }

@@ -1,12 +1,22 @@
+/* Wrapper stacks both videos in the same space via CSS Grid */
 .truebit-hero-video-wrapper {
-    position: relative;
+    display: grid;
     width: fit-content;
     overflow: hidden;
 }
 
 .truebit-hero-video {
+    grid-area: 1 / 1; /* both videos occupy the same cell */
     max-width: 100%;
     height: auto;
     display: block;
     mix-blend-mode: screen;
+    transition: opacity 3s ease;
+}
+
+/* opacity:0 keeps the video in the DOM and lets the browser preload it.
+   display:none would block preloading entirely. */
+.truebit-hero-loop {
+    opacity: 0;
+    pointer-events: none;
 }
