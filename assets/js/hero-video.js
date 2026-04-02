@@ -6,18 +6,40 @@
 
             if ( ! intro || ! loop ) return;
 
+            /* ── Intro: block autoplay, delay start by 1s ── */
+            var allowPlay = false;
+
+            intro.removeAttribute( 'autoplay' );
+            intro.autoplay = false;
+            intro.pause();
+            intro.currentTime = 0;
+            intro.muted     = true;
+            intro.playsInline = true;
+
+            // Override play() so any early browser-triggered calls are blocked
+            var originalPlay = intro.play.bind( intro );
+            intro.play = function () {
+                if ( ! allowPlay ) return Promise.resolve();
+                return originalPlay();
+            };
+
+            setTimeout( function () {
+                allowPlay = true;
+                intro.play().catch( function () {} );
+            }, 1000 );
+
+            /* ── Loop: crossfade trigger ── */
             var triggered = false;
 
             intro.addEventListener( 'timeupdate', function () {
                 if ( triggered ) return;
                 if ( ! intro.duration ) return;
 
-                // Fire 20ms before the intro ends
                 if ( intro.currentTime >= intro.duration - 1.0 ) {
                     triggered = true;
-                    loop.style.opacity      = '1';
+                    loop.style.opacity       = '1';
                     loop.style.pointerEvents = '';
-                    intro.style.opacity     = '0';
+                    intro.style.opacity      = '0';
                     loop.play();
                 }
             } );
