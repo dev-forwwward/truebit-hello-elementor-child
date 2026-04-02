@@ -1,0 +1,12 @@
+.truebit-hero-video-wrapper {
+    position: relative;
+    width: fit-content;
+    overflow: hidden;
+}
+
+.truebit-hero-video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    mix-blend-mode: screen;
+}

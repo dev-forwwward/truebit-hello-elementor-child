@@ -631,6 +631,10 @@ add_action( 'elementor/widgets/register', function ( $widgets_manager ) {
     // Posts Slider
     require_once get_stylesheet_directory() . '/widgets/class-posts-slider-widget.php';
     $widgets_manager->register( new \Truebit_Posts_Slider_Widget() );
+
+    // Hero Video
+    require_once get_stylesheet_directory() . '/widgets/class-hero-video-widget.php';
+    $widgets_manager->register( new \Truebit_Hero_Video_Widget() );
 });
 
 /* ─── Enqueue Swiper + Widget Assets ─── */
@@ -682,6 +686,21 @@ add_action( 'wp_enqueue_scripts', function () {
         filemtime( get_stylesheet_directory() . '/assets/js/posts-slider.js' ),
         true
     );
+
+    // Hero Video widget assets
+    wp_register_style(
+        'truebit-hero-video',
+        get_stylesheet_directory_uri() . '/assets/css/hero-video.css',
+        [],
+        filemtime( get_stylesheet_directory() . '/assets/css/hero-video.css' )
+    );
+    wp_register_script(
+        'truebit-hero-video',
+        get_stylesheet_directory_uri() . '/assets/js/hero-video.js',
+        [],
+        filemtime( get_stylesheet_directory() . '/assets/js/hero-video.js' ),
+        true
+    );
 });
 
 /* ─── Also load in Elementor Editor Preview ─── */
@@ -692,6 +711,8 @@ add_action( 'elementor/preview/enqueue_scripts', function () {
     wp_enqueue_script( 'truebit-features-slider' );
     wp_enqueue_style( 'truebit-posts-slider' );
     wp_enqueue_script( 'truebit-posts-slider' );
+    wp_enqueue_style( 'truebit-hero-video' );
+    wp_enqueue_script( 'truebit-hero-video' );
 });
 
 /* ─── Posts Mobile Slider (CSS class helper) ─── */
@@ -740,3 +761,6 @@ add_action( 'wp_enqueue_scripts', function () {
         true
     );
 } );
+
+
+
